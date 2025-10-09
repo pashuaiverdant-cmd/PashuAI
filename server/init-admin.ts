@@ -4,7 +4,7 @@ import { users } from "../shared/schema.js";
 
 export async function initializeDefaultAdmin() {
   const adminEmail = "manish@pashuAI.com";
-  const adminPassword = "Verdant.PASHUAI";
+  const adminPassword = "9672025828";
 
   try {
     const passwordHash = await hashPassword(adminPassword);
