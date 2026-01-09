@@ -139,7 +139,7 @@ export function Footer() {
               </li>
               <li>
                 <a 
-                  href="#" 
+                  href="/privacy-policy" 
                   className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 flex items-center group" 
                   data-testid="footer-link-privacy"
                 >

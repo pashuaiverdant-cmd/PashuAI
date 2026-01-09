@@ -13,6 +13,7 @@ import Signup from "@/pages/Signup";
 import AdminLogin from "@/pages/AdminLogin";
 import AdminDashboard from "@/pages/AdminDashboard";
 import NotFound from "@/pages/not-found";
+import PrivacyPolicy from "./components/FooterTabs/Privacy-Policy";
 
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
   const { isAuthenticated, isLoading } = useAuth();
@@ -56,6 +57,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/chat">
         {() => <ProtectedRoute component={Chat} />}
       </Route>
