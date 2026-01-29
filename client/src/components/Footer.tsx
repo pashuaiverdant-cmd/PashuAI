@@ -148,11 +148,11 @@ export function Footer() {
               </li>
               <li>
                 <a 
-                  href="#" 
+                  href="/Terms-of-use" 
                   className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 flex items-center group" 
                   data-testid="footer-link-terms"
                 >
-                  <span className="group-hover:translate-x-1 transition-transform duration-200">Terms of Service</span>
+                  <span className="group-hover:translate-x-1 transition-transform duration-200">Terms of Use</span>
                 </a>
               </li>
             </ul>
