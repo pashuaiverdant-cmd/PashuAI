@@ -10,12 +10,12 @@ export default function TermsOfUse() {
           Welcome to <strong>Verdant Impact</strong> ("Company", "we", "our", "us").
           These Terms of Use ("Terms") govern your access to and use of our website{" "}
           <a
-            href="https://verdantimpact.com"
+            href="https://www.pashu.ai"
             className="text-blue-600 underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            https://verdantimpact.com
+            https://www.pashu.ai
           </a>{" "}
           (the "Website") and any services, features, content, or applications offered
           through it.
@@ -135,12 +135,12 @@ export default function TermsOfUse() {
         <p className="mb-10">
           <strong>Website:</strong>{" "}
           <a
-            href="https://verdantimpact.com"
+            href="https://www.pashu.ai"
             className="text-blue-600 underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            https://verdantimpact.com
+            https://www.pashu.ai
           </a>
         </p>
   
