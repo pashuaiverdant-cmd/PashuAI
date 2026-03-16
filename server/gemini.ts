@@ -5,12 +5,19 @@ const VISION_MODEL = "gemini-2.5-flash";
 
 function getAi(): GoogleGenAI {
   console.log("GEMINI_API_KEY present:", !!process.env.GEMINI_API_KEY);
+  console.log("GOOGLE_API_KEY present:", !!process.env.GOOGLE_API_KEY);
+  console.log("GOOGLE_GENAI_API_KEY present:", !!process.env.GOOGLE_GENAI_API_KEY);
   console.log(
-    "Env keys containing GEMINI:",
-    Object.keys(process.env).filter((k) => k.includes("GEMINI"))
+    "Env keys containing KEY/GEMINI/GOOGLE:",
+    Object.keys(process.env).filter(
+      (k) => k.includes("GEMINI") || k.includes("GOOGLE") || k.includes("KEY")
+    )
   );
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey =
+    process.env.GEMINI_API_KEY ||
+    process.env.GOOGLE_GENAI_API_KEY ||
+    process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is missing");
