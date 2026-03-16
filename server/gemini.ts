@@ -4,6 +4,12 @@ const TEXT_MODEL = "gemini-2.5-flash";
 const VISION_MODEL = "gemini-2.5-flash";
 
 function getAi(): GoogleGenAI {
+  console.log("GEMINI_API_KEY present:", !!process.env.GEMINI_API_KEY);
+  console.log(
+    "Env keys containing GEMINI:",
+    Object.keys(process.env).filter((k) => k.includes("GEMINI"))
+  );
+
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
