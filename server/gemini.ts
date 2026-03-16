@@ -1,21 +1,17 @@
 import { GoogleGenAI } from "@google/genai";
 
-function getApiKey(): string {
+const TEXT_MODEL = "gemini-2.5-flash";
+const VISION_MODEL = "gemini-2.5-flash";
+
+function getAi(): GoogleGenAI {
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is missing");
   }
 
-  return apiKey;
+  return new GoogleGenAI({ apiKey });
 }
-
-const ai = new GoogleGenAI({
-  apiKey: getApiKey(),
-});
-
-const TEXT_MODEL = "gemini-2.5-flash";
-const VISION_MODEL = "gemini-2.5-flash";
 
 export async function analyzeAgriculturalImage(
   imageBase64: string,
@@ -23,6 +19,8 @@ export async function analyzeAgriculturalImage(
   userMessage: string,
   language: string
 ): Promise<string> {
+  const ai = getAi();
+
   const systemPrompt = `You are PashuAI, an expert agricultural AI assistant specializing in visual analysis of:
 - Crop diseases, pests, and nutrient deficiencies
 - Livestock health issues (cattle, buffalo, goats, sheep)
@@ -76,6 +74,8 @@ export async function generateAgriculturalAdvice(
   conversationHistory: { role: string; content: string }[],
   language: string
 ): Promise<string> {
+  const ai = getAi();
+
   const systemPrompt = `You are PashuAI, an expert agricultural AI assistant with deep knowledge of:
 - Crop management (planting, irrigation, fertilization, harvesting)
 - Livestock care (cattle, buffalo, goats - health, breeding, nutrition)
