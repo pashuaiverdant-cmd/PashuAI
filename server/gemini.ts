@@ -1,7 +1,21 @@
-// Referenced from javascript_gemini blueprint
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+function getApiKey(): string {
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is missing");
+  }
+
+  return apiKey;
+}
+
+const ai = new GoogleGenAI({
+  apiKey: getApiKey(),
+});
+
+const TEXT_MODEL = "gemini-2.5-flash";
+const VISION_MODEL = "gemini-2.5-flash";
 
 export async function analyzeAgriculturalImage(
   imageBase64: string,
@@ -26,32 +40,35 @@ Provide detailed analysis in ${language === "en" ? "English" : getLanguageName(l
 
 Be specific, practical, and use simple language farmers can understand. If discussing costs, use Indian Rupees (₹).`;
 
-  const contents = [
-    {
-      role: "user",
-      parts: [
-        {
-          inlineData: {
-            data: imageBase64,
-            mimeType: mimeType,
-          },
-        },
-        {
-          text: userMessage || "Please analyze this image and provide detailed agricultural insights.",
-        },
-      ],
-    },
-  ];
-
   const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash-exp",
+    model: VISION_MODEL,
     config: {
       systemInstruction: systemPrompt,
     },
-    contents: contents,
+    contents: [
+      {
+        role: "user",
+        parts: [
+          {
+            inlineData: {
+              data: imageBase64,
+              mimeType,
+            },
+          },
+          {
+            text:
+              userMessage ||
+              "Please analyze this image and provide detailed agricultural insights.",
+          },
+        ],
+      },
+    ],
   });
 
-  return response.text || "I apologize, I couldn't analyze the image. Please try again with a clearer image.";
+  return (
+    response.text ||
+    "I apologize, I couldn't analyze the image. Please try again with a clearer image."
+  );
 }
 
 export async function generateAgriculturalAdvice(
@@ -68,12 +85,12 @@ export async function generateAgriculturalAdvice(
 - Sustainable farming practices
 - Indian agricultural seasons (Kharif, Rabi, Zaid)
 
-Provide practical, actionable advice in ${language === "en" ? "English" : getLanguageName(language)}. 
+Provide practical, actionable advice in ${language === "en" ? "English" : getLanguageName(language)}.
 Be concise but thorough. Use simple language that farmers can understand.
 If discussing prices, use Indian Rupees (₹).
 Consider Indian agricultural context and practices.`;
 
-  const contents = conversationHistory.map(msg => ({
+  const contents = conversationHistory.map((msg) => ({
     role: msg.role === "user" ? "user" : "model",
     parts: [{ text: msg.content }],
   }));
@@ -84,14 +101,17 @@ Consider Indian agricultural context and practices.`;
   });
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash-exp",
+    model: TEXT_MODEL,
     config: {
       systemInstruction: systemPrompt,
     },
-    contents: contents,
+    contents,
   });
 
-  return response.text || "I apologize, I couldn't generate a response. Please try again.";
+  return (
+    response.text ||
+    "I apologize, I couldn't generate a response. Please try again."
+  );
 }
 
 function getLanguageName(code: string): string {
@@ -122,5 +142,6 @@ function getLanguageName(code: string): string {
     mni: "Manipuri (ꯃꯩꯇꯩꯂꯣꯟ)",
     sat: "Santali (ᱥᱟᱱᱛᱟᱲᱤ)",
   };
+
   return languages[code] || "English";
 }
